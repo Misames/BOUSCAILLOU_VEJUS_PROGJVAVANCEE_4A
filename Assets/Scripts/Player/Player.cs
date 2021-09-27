@@ -6,16 +6,16 @@ public class Player : MonoBehaviour
 
     void Punch(GameObject enemie)
     {
-
+        Debug.Log("");
     }
 
     void Kick(GameObject enemie)
     {
-
+        Debug.Log("");
     }
 
     void Block()
     {
-
+        Debug.Log("");
     }
 }
