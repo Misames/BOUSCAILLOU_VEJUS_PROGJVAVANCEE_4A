@@ -45,10 +45,7 @@ public class MoveEnnemi : MonoBehaviour
         // on converti la vitesse du joueur pour qu'elle soit toujours positive
         float characterVelocity = Mathf.Abs(RigidbodyPlayer.velocity.x);
         animator.SetFloat("speed", characterVelocity);
-    }
-
-    private void Update()
-    {
+        
         if (Input.GetButtonDown("Fire1 joueur2") && !isAttacking)
         {
             isAttacking = true;
@@ -63,9 +60,7 @@ public class MoveEnnemi : MonoBehaviour
             StartCoroutine(Doattack());
         }
     }
-
-    
-
+     
     void move(float _Horizontalmove)
     {
         Vector3 targetVelocity = new Vector2(_Horizontalmove, RigidbodyPlayer.velocity.y);
