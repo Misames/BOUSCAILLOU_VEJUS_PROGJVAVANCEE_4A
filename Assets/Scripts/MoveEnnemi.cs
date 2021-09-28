@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveEnnemi : MonoBehaviour
 {
-     //variable joueur
+    //variable joueur
     public SpriteRenderer player;
 
     //variable déplacement
@@ -13,8 +12,8 @@ public class MoveEnnemi : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
     //variable saut
-    private bool isjumping = false;
-    private bool isGrounding = false;
+    bool isjumping = false;
+    bool isGrounding = false;
     public float jumpforce;
     public Transform GroundCheckLeft;
     public Transform GroundCheckRight;
@@ -23,23 +22,23 @@ public class MoveEnnemi : MonoBehaviour
 
     // variable attack
 
-    private bool isAttacking = false;
+    bool isAttacking = false;
     [SerializeField]
-     GameObject hitboxAttack;
+    GameObject hitboxAttack;
 
-     private void Start()
-     {
-         hitboxAttack.SetActive(false);
-     }
+    void Start()
+    {
+        hitboxAttack.SetActive(false);
+    }
 
-     void FixedUpdate()
+    void FixedUpdate()
     {
         isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
         float Horizontalmove = Input.GetAxis("Horizontal Joueur2") * moveSpeed * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Z) && isGrounding == true)
             isjumping = true;
         changeDirection();
-        
+
         move(Horizontalmove);
 
         // on converti la vitesse du joueur pour qu'elle soit toujours positive
@@ -55,16 +54,38 @@ public class MoveEnnemi : MonoBehaviour
             animator.Play("PlayerPunch");
             StartCoroutine(Doattack());
         }
-        
+
         if (Input.GetButtonDown("Fire2 Joueur2") && !isAttacking)
         {
             isAttacking = true;
             animator.Play("PlayerKick");
             StartCoroutine(Doattack());
         }
-    }
 
-    
+        var number = Random.Range(1, 3);
+        switch (number)
+        {
+            case 1:
+                isAttacking = true;
+                animator.Play("PlayerKick");
+                StartCoroutine(Doattack());
+                break;
+            case 2:
+                isAttacking = true;
+                animator.Play("PlayerPunch");
+                StartCoroutine(Doattack());
+                break;
+            case 3: // bouger à droite
+                break;
+            case 4: // bouger à gauche
+                break;
+            case 5: // jump
+                break;
+            default:
+                Debug.Log("erreur");
+                break;
+        }
+    }
 
     void move(float _Horizontalmove)
     {
@@ -81,12 +102,10 @@ public class MoveEnnemi : MonoBehaviour
 
     void changeDirection()
     {
-        if (RigidbodyPlayer.velocity.x > 0.1f)
-            player.flipX = false;
-        else if (RigidbodyPlayer.velocity.x < -0.1f)
-            player.flipX = true;
+        if (RigidbodyPlayer.velocity.x > 0.1f) player.flipX = false;
+        else if (RigidbodyPlayer.velocity.x < -0.1f) player.flipX = true;
     }
-    
+
     IEnumerator Doattack()
     {
         hitboxAttack.SetActive(true);
@@ -94,6 +113,6 @@ public class MoveEnnemi : MonoBehaviour
         hitboxAttack.SetActive(false);
         isAttacking = false;
     }
-    
+
 
 }

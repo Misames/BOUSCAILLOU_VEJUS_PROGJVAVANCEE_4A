@@ -42,11 +42,9 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         endScreen.SetActive(true);
-        if (namePlayer != "")
-        {
-            var monText = txtEnd.GetComponent<Text>();
-            monText.text = $"Le gagant est {namePlayer}";
-        }
+        Text monText = txtEnd.GetComponent<Text>();
+        if (namePlayer != "") monText.text = $"Le gagant est {namePlayer}";
+        else monText.text = "Match nul !";
     }
 
     public void ResumeGame()

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -22,24 +21,22 @@ public class MovePlayer : MonoBehaviour
     public Animator animator;
 
     // variable attack
-
     private bool isAttacking = false;
-    [SerializeField]
-     GameObject hitboxAttack;
+    [SerializeField] GameObject hitboxAttack;
 
-     private void Start()
-     {
-         hitboxAttack.SetActive(false);
-     }
+    void Start()
+    {
+        hitboxAttack.SetActive(false);
+    }
 
-     void FixedUpdate()
+    void FixedUpdate()
     {
         isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
         float Horizontalmove = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && isGrounding == true)
             isjumping = true;
         changeDirection();
-        
+
         move(Horizontalmove);
 
         // on converti la vitesse du joueur pour qu'elle soit toujours positive
@@ -55,7 +52,7 @@ public class MovePlayer : MonoBehaviour
             animator.Play("PlayerPunch");
             StartCoroutine(Doattack());
         }
-        
+
         if (Input.GetButtonDown("Fire2") && !isAttacking)
         {
             isAttacking = true;
@@ -63,8 +60,6 @@ public class MovePlayer : MonoBehaviour
             StartCoroutine(Doattack());
         }
     }
-
-    
 
     void move(float _Horizontalmove)
     {
@@ -81,12 +76,10 @@ public class MovePlayer : MonoBehaviour
 
     void changeDirection()
     {
-        if (RigidbodyPlayer.velocity.x > 0.1f)
-            player.flipX = false;
-        else if (RigidbodyPlayer.velocity.x < -0.1f)
-            player.flipX = true;
+        if (RigidbodyPlayer.velocity.x > 0.1f) player.flipX = false;
+        else if (RigidbodyPlayer.velocity.x < -0.1f) player.flipX = true;
     }
-    
+
     IEnumerator Doattack()
     {
         hitboxAttack.SetActive(true);
@@ -94,5 +87,5 @@ public class MovePlayer : MonoBehaviour
         hitboxAttack.SetActive(false);
         isAttacking = false;
     }
-    
+
 }
