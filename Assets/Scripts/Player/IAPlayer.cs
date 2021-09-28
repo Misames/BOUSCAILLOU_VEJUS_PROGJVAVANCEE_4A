@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class SecondPlayer : MonoBehaviour
+public class IAPlayer : MonoBehaviour
 {
     // Player
-    [SerializeField] Player secondPlayer;
     public SpriteRenderer player;
+    [SerializeField] Player secondPlayer;
     public GameObject myHealthBar;
     public int myHealth = 100;
     bool inRange;
@@ -14,22 +14,23 @@ public class SecondPlayer : MonoBehaviour
     // Move
     public float moveSpeed;
     public Rigidbody2D RigidbodyPlayer;
-    private Vector3 velocity = Vector3.zero;
+    Vector3 velocity = Vector3.zero;
 
     // Jump
     bool isjumping = false;
     bool isGrounding = false;
     public float jumpforce;
-    public Transform GroundCheckLeft;
-    public Transform GroundCheckRight;
+    [SerializeField] Transform GroundCheckLeft;
+    [SerializeField] Transform GroundCheckRight;
 
     // Animation
     public Animator animator;
 
-    // variable attack
+    // Attack
     bool isAttacking = false;
     [SerializeField] GameObject hitboxAttack;
 
+    // Event
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
@@ -43,13 +44,14 @@ public class SecondPlayer : MonoBehaviour
     void Start()
     {
         hitboxAttack.SetActive(false);
+        myHealthBar.GetComponent<Slider>().value = myHealth;
     }
 
     void FixedUpdate()
     {
         isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
-        float Horizontalmove = Input.GetAxis("Horizontal Joueur2") * moveSpeed * Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Z) && isGrounding == true) isjumping = true;
+        float Horizontalmove = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounding == true) isjumping = true;
         ChangeDirection();
         Move(Horizontalmove);
         // on converti la vitesse du joueur pour qu'elle soit toujours positive
@@ -59,7 +61,31 @@ public class SecondPlayer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1 joueur2") && !isAttacking)
+        int rand = Random.Range(1, 3);
+
+        switch (rand)
+        {
+            case 1:
+                isAttacking = true;
+                animator.Play("PlayerPunch");
+                StartCoroutine(DoAttack());
+                if (inRange) Punch(secondPlayer);
+                break;
+            case 2:
+                isAttacking = true;
+                animator.Play("PlayerKick");
+                StartCoroutine(DoAttack());
+                if (inRange) Kick(secondPlayer);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
+
+        if (Input.GetButtonDown("Fire1") && !isAttacking)
         {
             isAttacking = true;
             animator.Play("PlayerPunch");
@@ -67,7 +93,7 @@ public class SecondPlayer : MonoBehaviour
             if (inRange) Punch(secondPlayer);
         }
 
-        if (Input.GetButtonDown("Fire2 Joueur2") && !isAttacking)
+        if (Input.GetButtonDown("Fire2") && !isAttacking)
         {
             isAttacking = true;
             animator.Play("PlayerKick");

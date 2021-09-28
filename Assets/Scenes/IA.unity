@@ -308,7 +308,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1576465390}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
@@ -673,7 +673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 514838063}
-  secondPlayer: {fileID: 1703448493}
+  secondPlayer: {fileID: 0}
   myHealthBar: {fileID: 434942046}
   myHealth: 100
   moveSpeed: 300
@@ -1133,7 +1133,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1576465390}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -4798,7 +4798,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1576465389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e64cd9f0a205c1246a5cf33d7840a1c7, type: 3}
+  m_Script: {fileID: 11500000, guid: e7edd42b738f26a4bb8a8aaf732786b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   firstPlayer: {fileID: 514838062}
@@ -4992,18 +4992,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1703448488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5541810c79859564e918ae6bb10cc50b, type: 3}
+  m_Script: {fileID: 11500000, guid: 479246da7087bb54f8a6d6cb0795d620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondPlayer: {fileID: 514838062}
   player: {fileID: 1703448494}
+  secondPlayer: {fileID: 514838062}
   myHealthBar: {fileID: 910324608}
   myHealth: 100
   moveSpeed: 300
   RigidbodyPlayer: {fileID: 1703448489}
   jumpforce: 500
   GroundCheckLeft: {fileID: 820676490}
-  GroundCheckRight: {fileID: 1728099720}
+  GroundCheckRight: {fileID: 820676490}
   animator: {fileID: 1703448492}
   hitboxAttack: {fileID: 1661754533}
 --- !u!212 &1703448494
@@ -12265,7 +12265,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1576465390}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Replay
         m_Mode: 1
