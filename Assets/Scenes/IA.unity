@@ -308,7 +308,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1576465390}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
@@ -616,10 +616,9 @@ GameObject:
   - component: {fileID: 514838065}
   - component: {fileID: 514838061}
   - component: {fileID: 514838060}
-  - component: {fileID: 514838067}
   m_Layer: 0
-  m_Name: Player
-  m_TagString: Untagged
+  m_Name: Player1
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -674,6 +673,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 514838063}
+  secondPlayer: {fileID: 0}
+  myHealthBar: {fileID: 434942046}
+  myHealth: 100
   moveSpeed: 300
   RigidbodyPlayer: {fileID: 514838060}
   jumpforce: 500
@@ -759,7 +761,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.03}
@@ -794,21 +796,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &514838067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 514838059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76cb807893fb6764da65fe1c3b754692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coefBlock: 1
-  healthBar: {fileID: 434942046}
-  health: 100
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,11 +928,11 @@ RectTransform:
   m_Father: {fileID: 1747332073}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26, y: 440.57}
-  m_SizeDelta: {x: 496.7981, y: 93.145}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -46}
+  m_SizeDelta: {x: 496.7981, y: 93.14502}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &692794052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1146,7 +1133,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1576465390}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -1259,11 +1246,11 @@ RectTransform:
   m_Father: {fileID: 1747332073}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1573, y: -96}
-  m_SizeDelta: {x: 653.88, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -90, y: -46}
+  m_SizeDelta: {x: 653.8799, y: 100}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &910324610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4811,16 +4798,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1576465389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e64cd9f0a205c1246a5cf33d7840a1c7, type: 3}
+  m_Script: {fileID: 11500000, guid: e7edd42b738f26a4bb8a8aaf732786b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstPlayer: {fileID: 514838067}
-  secondPlayer: {fileID: 1703448496}
+  firstPlayer: {fileID: 514838062}
+  secondPlayer: {fileID: 1703448493}
   pauseMenu: {fileID: 1823716234}
   endScreen: {fileID: 56512579}
+  txtEnd: {fileID: 1540391121}
   textTime: {fileID: 692794052}
   gameDuration: 60
-  txtEnd: {fileID: 1540391121}
 --- !u!4 &1576465391
 Transform:
   m_ObjectHideFlags: 0
@@ -4907,10 +4894,9 @@ GameObject:
   - component: {fileID: 1703448490}
   - component: {fileID: 1703448489}
   - component: {fileID: 1703448493}
-  - component: {fileID: 1703448496}
   m_Layer: 0
-  m_Name: Le mechant
-  m_TagString: Untagged
+  m_Name: Player2
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4962,7 +4948,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.03}
@@ -5006,15 +4992,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1703448488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5541810c79859564e918ae6bb10cc50b, type: 3}
+  m_Script: {fileID: 11500000, guid: 479246da7087bb54f8a6d6cb0795d620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1703448494}
+  secondPlayer: {fileID: 514838062}
+  myHealthBar: {fileID: 910324608}
+  myHealth: 100
   moveSpeed: 300
   RigidbodyPlayer: {fileID: 1703448489}
   jumpforce: 500
   GroundCheckLeft: {fileID: 820676490}
-  GroundCheckRight: {fileID: 1728099720}
+  GroundCheckRight: {fileID: 820676490}
   animator: {fileID: 1703448492}
   hitboxAttack: {fileID: 1661754533}
 --- !u!212 &1703448494
@@ -5085,21 +5074,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1703448496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703448488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76cb807893fb6764da65fe1c3b754692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coefBlock: 1
-  healthBar: {fileID: 910324608}
-  health: 100
 --- !u!1 &1728099719
 GameObject:
   m_ObjectHideFlags: 0
@@ -12291,7 +12265,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1576465390}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Replay
         m_Mode: 1

@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class IAPlayer : MonoBehaviour
 {
     // Player
     public SpriteRenderer player;
-    [SerializeField] SecondPlayer secondPlayer;
+    [SerializeField] Player secondPlayer;
     public GameObject myHealthBar;
     public int myHealth = 100;
     bool inRange;
@@ -61,6 +61,30 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        int rand = Random.Range(1, 3);
+
+        switch (rand)
+        {
+            case 1:
+                isAttacking = true;
+                animator.Play("PlayerPunch");
+                StartCoroutine(DoAttack());
+                if (inRange) Punch(secondPlayer);
+                break;
+            case 2:
+                isAttacking = true;
+                animator.Play("PlayerKick");
+                StartCoroutine(DoAttack());
+                if (inRange) Kick(secondPlayer);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
+
         if (Input.GetButtonDown("Fire1") && !isAttacking)
         {
             isAttacking = true;
@@ -105,13 +129,13 @@ public class Player : MonoBehaviour
         isAttacking = false;
     }
 
-    void Punch(SecondPlayer enemie)
+    void Punch(Player enemie)
     {
         enemie.myHealth -= 10;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
     }
 
-    void Kick(SecondPlayer enemie)
+    void Kick(Player enemie)
     {
         enemie.myHealth -= 20;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;

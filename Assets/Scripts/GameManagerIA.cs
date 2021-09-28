@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManagerIA : MonoBehaviour
 {
     [SerializeField] Player firstPlayer;
-    [SerializeField] SecondPlayer secondPlayer;
+    [SerializeField] IAPlayer secondPlayer;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject endScreen;
     [SerializeField] GameObject txtEnd;
