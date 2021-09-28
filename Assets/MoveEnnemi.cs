@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class MovePlayer : MonoBehaviour
+public class MoveEnnemi : MonoBehaviour
 {
-    //variable joueur
+     //variable joueur
     public SpriteRenderer player;
 
     //variable déplacement
@@ -35,8 +35,8 @@ public class MovePlayer : MonoBehaviour
      void FixedUpdate()
     {
         isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
-        float Horizontalmove = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounding == true)
+        float Horizontalmove = Input.GetAxis("Horizontal Joueur2") * moveSpeed * Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Z) && isGrounding == true)
             isjumping = true;
         changeDirection();
         
@@ -49,14 +49,14 @@ public class MovePlayer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !isAttacking)
+        if (Input.GetButtonDown("Fire1 joueur2") && !isAttacking)
         {
             isAttacking = true;
             animator.Play("PlayerPunch");
             StartCoroutine(Doattack());
         }
         
-        if (Input.GetButtonDown("Fire2") && !isAttacking)
+        if (Input.GetButtonDown("Fire2 Joueur2") && !isAttacking)
         {
             isAttacking = true;
             animator.Play("PlayerKick");
@@ -95,4 +95,5 @@ public class MovePlayer : MonoBehaviour
         isAttacking = false;
     }
     
+
 }
