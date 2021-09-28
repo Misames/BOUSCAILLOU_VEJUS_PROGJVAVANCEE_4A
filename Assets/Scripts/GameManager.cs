@@ -1,16 +1,16 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] Player firstPlayer;
-    [SerializeField] Player secondPlayer;
+    [SerializeField] SecondPlayer secondPlayer;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject endScreen;
+    [SerializeField] GameObject txtEnd;
     [SerializeField] Text textTime;
     [SerializeField] float gameDuration = 60;
-    [SerializeField] GameObject txtEnd;
     bool isPause;
 
     void Start()
@@ -25,12 +25,12 @@ public class GameManager : MonoBehaviour
         textTime.text = Mathf.RoundToInt(gameDuration).ToString();
         if (gameDuration <= 0)
         {
-            if (firstPlayer.health > secondPlayer.health) endGame("Joueur 1");
-            else if (firstPlayer.health < secondPlayer.health) endGame("Joueur 2");
+            if (firstPlayer.myHealth > secondPlayer.myHealth) endGame("Joueur 1");
+            else if (firstPlayer.myHealth < secondPlayer.myHealth) endGame("Joueur 2");
             else endGame("");
         }
-        if (firstPlayer.health <= 0) endGame("Joueur 2");
-        if (secondPlayer.health <= 0) endGame("Joueur 1");
+        if (firstPlayer.myHealth <= 0) endGame("Joueur 2");
+        if (secondPlayer.myHealth <= 0) endGame("Joueur 1");
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPause) ResumeGame();
