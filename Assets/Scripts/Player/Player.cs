@@ -2,20 +2,27 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    int life = 100;
+    [SerializeField]
+    int health = 100;
+    [SerializeField]
+    float coefBlock = 1f;
+    bool block;
 
-    void Punch(GameObject enemie)
+    void Punch(Player enemie)
     {
-        Debug.Log("");
+        enemie.health -= 10;
+        Debug.Log("Coup de poing !");
     }
 
-    void Kick(GameObject enemie)
+    void Kick(Player enemie)
     {
-        Debug.Log("");
+        enemie.health -= 20;
+        Debug.Log("Coup de pied !");
     }
 
     void Block()
     {
-        Debug.Log("");
+        Debug.Log("Blocage !");
+        block = true;
     }
 }

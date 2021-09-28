@@ -1,31 +1,33 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject firstPlayer;
     public GameObject secondPlayer;
     public GameObject pauseMenu;
+    public GameObject endScreen;
+    public Text textTime;
     bool isPause = false;
-    int gameDuration = 60;
-    float currentTime;
+    bool endGame = false;
+    float gameDuration = 60;
 
     void Update()
     {
-        // check condition de victoire
+        gameDuration -= Time.deltaTime;
+        textTime.text = gameDuration.ToString();
 
-        // mettre à jour la scène
+        if (gameDuration <= 0)
+        {
+            // code
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPause) ResumeGame();
             else PauseGame();
         }
-    }
-
-    void Start()
-    {
-        Debug.Log("Init game !");
     }
 
     public void ResumeGame()
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void Quit()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(0);
     }
 
 }
