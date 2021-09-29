@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
+        Debug.Log("hit");
     }
 
     void OnTriggerExit2D(Collider2D other)
