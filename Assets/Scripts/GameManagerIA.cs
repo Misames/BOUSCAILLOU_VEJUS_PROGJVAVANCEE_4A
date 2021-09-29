@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManagerIA : MonoBehaviour
 {
-    [SerializeField] Player firstPlayer;
-    [SerializeField] SecondPlayer secondPlayer;
+    [SerializeField] PlayerVsIA firstPlayer;
+    [SerializeField] IAPlayer secondPlayer;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject endScreen;
     [SerializeField] GameObject txtEnd;
@@ -18,7 +17,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         isPause = false;
-        
     }
 
     void Update()

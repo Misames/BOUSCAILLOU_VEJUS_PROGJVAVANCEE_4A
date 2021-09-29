@@ -1,12 +1,12 @@
 using System.Collections;
-using UnityEngine.UI;
+using System.Collections.Generic;
 using UnityEngine;
-
-public class Player : MonoBehaviour
+using UnityEngine.UI;
+public class PlayerVsIA : MonoBehaviour
 {
     // Player
     public SpriteRenderer player;
-    [SerializeField] SecondPlayer secondPlayer;
+    [SerializeField] IAPlayer _iaPlayer;
     public GameObject myHealthBar;
     public int myHealth = 100;
     bool inRange;
@@ -34,7 +34,6 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
-        Debug.Log("hit");
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -67,7 +66,7 @@ public class Player : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerPunch");
             StartCoroutine(DoAttack());
-            if (inRange) Punch(secondPlayer);
+            if (inRange) Punch(_iaPlayer);
         }
 
         if (Input.GetButtonDown("Fire2") && !isAttacking)
@@ -75,7 +74,7 @@ public class Player : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerKick");
             StartCoroutine(DoAttack());
-            if (inRange) Kick(secondPlayer);
+            if (inRange) Kick(_iaPlayer);
         }
     }
 
@@ -106,13 +105,13 @@ public class Player : MonoBehaviour
         isAttacking = false;
     }
 
-    void Punch(SecondPlayer enemie)
+    void Punch(IAPlayer enemie)
     {
         enemie.myHealth -= 10;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
     }
 
-    void Kick(SecondPlayer enemie)
+    void Kick(IAPlayer enemie)
     {
         enemie.myHealth -= 20;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;

@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class IAPlayer : MonoBehaviour
 {
     // Player
     public SpriteRenderer player;
-    [SerializeField] SecondPlayer secondPlayer;
+    public PlayerVsIA secondPlayer;
     public GameObject myHealthBar;
     public int myHealth = 100;
     bool inRange;
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
-        Debug.Log("hit");
+        
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
         myHealthBar.GetComponent<Slider>().value = myHealth;
     }
 
-    void FixedUpdate()
+ /*   void FixedUpdate()
     {
         isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
         float Horizontalmove = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
@@ -58,10 +58,51 @@ public class Player : MonoBehaviour
         // on converti la vitesse du joueur pour qu'elle soit toujours positive
         float characterVelocity = Mathf.Abs(RigidbodyPlayer.velocity.x);
         animator.SetFloat("speed", characterVelocity);
-    }
+    } */
 
     void Update()
     {
+        int rand = Random.Range(1, 6);
+        
+        switch (rand)
+        {
+            case 1:
+                StartCoroutine(waitAttack());
+                isAttacking = true;
+                animator.Play("PlayerPunch");
+                StartCoroutine(DoAttack());
+                if (inRange) Punch(secondPlayer);
+                break;
+            case 2:
+                StartCoroutine(waitAttack());
+                isAttacking = true;
+                animator.Play("PlayerKick");
+                StartCoroutine(DoAttack());
+                if (inRange) Kick(secondPlayer);
+                break;
+            case 3:
+                Move(5);
+                ChangeDirection();
+                break;
+            case 4:
+                Move(-5);
+                ChangeDirection();
+                break;
+            case 5 :
+                isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
+                if (isGrounding)
+                {
+                    animator.Play("PlayerJump");
+                    RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpforce));
+                    isjumping = false; 
+                }
+                
+                break;
+
+            default:
+                break;
+        }
+
         if (Input.GetButtonDown("Fire1") && !isAttacking)
         {
             isAttacking = true;
@@ -106,13 +147,18 @@ public class Player : MonoBehaviour
         isAttacking = false;
     }
 
-    void Punch(SecondPlayer enemie)
+    IEnumerator waitAttack()
+    {
+        yield return new WaitForSeconds(5f);
+    }
+
+    void Punch(PlayerVsIA enemie)
     {
         enemie.myHealth -= 10;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
     }
 
-    void Kick(SecondPlayer enemie)
+    void Kick(PlayerVsIA enemie)
     {
         enemie.myHealth -= 20;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
