@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerIA : MonoBehaviour
 {
-    [SerializeField] Player firstPlayer;
+    [SerializeField] PlayerVsIA firstPlayer;
     [SerializeField] IAPlayer secondPlayer;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject endScreen;
