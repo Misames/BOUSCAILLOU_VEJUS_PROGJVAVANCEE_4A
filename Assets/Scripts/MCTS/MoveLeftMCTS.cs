@@ -6,11 +6,11 @@ public class MoveLeftMCTS : MonoBehaviour
 {
     private Vector2 posJ2;
     public float ValMove;
-    void MovePlayerLeft()
+    public void MovePlayerLeft(Vector2 player )
     {
         if (posJ2.x <= 0)
         {
-            posJ2.x += 0;
+            posJ2.x = player.x * 300 * Time.deltaTime;
         }
         else
         {

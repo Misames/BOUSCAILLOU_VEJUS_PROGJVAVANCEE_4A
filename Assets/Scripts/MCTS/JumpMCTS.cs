@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class JumpMCTS : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool jumpActif = true;
+    
+    
+    public void Jump(Vector2 player)
     {
-        
+        // Si on est au sol on peut jump 
+        if (player.y == 1.64684)
+        {
+            player += new Vector2(0,3) ;
+        }
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public void JumpActive()
     {
-        
+        jumpActif = !jumpActif;
+    }
+   
+    // Renvoie si l'action est disponible ou pas 
+    
+    public bool JumpIsActive()
+    {
+        return jumpActif;
     }
 }
