@@ -27,24 +27,23 @@ public class Player : MonoBehaviour
     public Animator animator;
 
     // Attack
-    [SerializeField] GameObject hitboxAttack;
     bool isAttacking = false;
 
     // Event
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player") inRange = true;
+        if (other.tag == "Player")
+        {
+            inRange = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Player") inRange = false;
-    }
-
-    void Start()
-    {
-        hitboxAttack.SetActive(false);
-        UIHealth.value = myHealth;
+        if (other.tag == "Player")
+        {
+            inRange = false;
+        }
     }
 
     void FixedUpdate()
@@ -66,7 +65,7 @@ public class Player : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerPunch");
             StartCoroutine(DoAttack());
-            if (inRange) Punch(secondPlayer);
+            if (inRange) Attack(secondPlayer, 10);
         }
 
         if (Input.GetButtonDown("Fire2") && !isAttacking)
@@ -74,7 +73,7 @@ public class Player : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerKick");
             StartCoroutine(DoAttack());
-            if (inRange) Kick(secondPlayer);
+            if (inRange) Attack(secondPlayer, 20);
         }
     }
 
@@ -99,21 +98,14 @@ public class Player : MonoBehaviour
 
     IEnumerator DoAttack()
     {
-        hitboxAttack.SetActive(true);
         yield return new WaitForSeconds(.2f);
-        hitboxAttack.SetActive(false);
         isAttacking = false;
     }
 
-    void Punch(SecondPlayer enemie)
+    void Attack(SecondPlayer enemie, int damage)
     {
-        enemie.myHealth -= 10;
+        enemie.myHealth -= damage;
         enemie.UIHealth.value = enemie.myHealth;
     }
 
-    void Kick(SecondPlayer enemie)
-    {
-        enemie.myHealth -= 20;
-        enemie.UIHealth.value = enemie.myHealth;
-    }
 }

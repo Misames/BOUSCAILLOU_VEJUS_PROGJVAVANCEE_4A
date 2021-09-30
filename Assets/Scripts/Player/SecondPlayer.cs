@@ -8,7 +8,7 @@ public class SecondPlayer : MonoBehaviour
     [SerializeField] Player secondPlayer;
     public SpriteRenderer player;
     public Slider UIHealth;
-    public byte myHealth = 100;
+    public int myHealth = 100;
     bool inRange;
 
     // Move
@@ -27,9 +27,9 @@ public class SecondPlayer : MonoBehaviour
     public Animator animator;
 
     // variable attack
-    [SerializeField] GameObject hitboxAttack;
     bool isAttacking = false;
 
+    // Events
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
@@ -38,11 +38,6 @@ public class SecondPlayer : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = false;
-    }
-
-    void Start()
-    {
-        hitboxAttack.SetActive(false);
     }
 
     void FixedUpdate()
@@ -64,7 +59,7 @@ public class SecondPlayer : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerPunch");
             StartCoroutine(DoAttack());
-            if (inRange) Punch(secondPlayer);
+            if (inRange) Attack(secondPlayer, 10);
         }
 
         if (Input.GetButtonDown("Fire2 Joueur2") && !isAttacking)
@@ -72,7 +67,7 @@ public class SecondPlayer : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerKick");
             StartCoroutine(DoAttack());
-            if (inRange) Kick(secondPlayer);
+            if (inRange) Attack(secondPlayer, 10);
         }
     }
 
@@ -97,21 +92,13 @@ public class SecondPlayer : MonoBehaviour
 
     IEnumerator DoAttack()
     {
-        hitboxAttack.SetActive(true);
         yield return new WaitForSeconds(.2f);
-        hitboxAttack.SetActive(false);
         isAttacking = false;
     }
 
-    void Punch(Player enemie)
+    void Attack(Player enemie, int damage)
     {
-        enemie.myHealth -= 10;
-        enemie.UIHealth.value = enemie.myHealth;
-    }
-
-    void Kick(Player enemie)
-    {
-        enemie.myHealth -= 20;
+        enemie.myHealth -= damage;
         enemie.UIHealth.value = enemie.myHealth;
     }
 }

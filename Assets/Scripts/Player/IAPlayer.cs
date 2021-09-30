@@ -42,16 +42,9 @@ public class IAPlayer : MonoBehaviour
         if (other.tag == "Player") inRange = false;
     }
 
-    void Start()
-    {
-        hitboxAttack.SetActive(false);
-        UIHealth.value = myHealth;
-    }
-
     void Update()
     {
         int rand = Random.Range(1, 6);
-
         switch (rand)
         {
             case 1:
@@ -59,14 +52,14 @@ public class IAPlayer : MonoBehaviour
                 isAttacking = true;
                 animator.Play("PlayerPunch");
                 StartCoroutine(DoAttack());
-                if (inRange) Punch(secondPlayer);
+                if (inRange) Attack(secondPlayer, 10);
                 break;
             case 2:
                 StartCoroutine(waitAttack());
                 isAttacking = true;
                 animator.Play("PlayerKick");
                 StartCoroutine(DoAttack());
-                if (inRange) Kick(secondPlayer);
+                if (inRange) Attack(secondPlayer, 20);
                 break;
             case 3:
                 Move(5);
@@ -94,7 +87,7 @@ public class IAPlayer : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerPunch");
             StartCoroutine(DoAttack());
-            if (inRange) Punch(secondPlayer);
+            if (inRange) Attack(secondPlayer, 10);
         }
 
         if (Input.GetButtonDown("Fire2") && !isAttacking)
@@ -102,7 +95,7 @@ public class IAPlayer : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerKick");
             StartCoroutine(DoAttack());
-            if (inRange) Kick(secondPlayer);
+            if (inRange) Attack(secondPlayer, 20);
         }
     }
 
@@ -137,16 +130,9 @@ public class IAPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
     }
-
-    void Punch(PlayerVsIA enemie)
+    void Attack(PlayerVsIA enemie, int damage)
     {
-        enemie.myHealth -= 10;
-        enemie.UIHealth.value = enemie.myHealth;
-    }
-
-    void Kick(PlayerVsIA enemie)
-    {
-        enemie.myHealth -= 20;
+        enemie.myHealth -= damage;
         enemie.UIHealth.value = enemie.myHealth;
     }
 }
