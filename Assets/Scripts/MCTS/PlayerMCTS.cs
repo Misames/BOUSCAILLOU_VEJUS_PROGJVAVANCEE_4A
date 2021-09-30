@@ -1,33 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMCTS : MonoBehaviour
 {
    // Player
-    public SpriteRenderer player;
-    public PlayerVsIA secondPlayer;
+    public SpriteRenderer playerMCTSSprite;
+    public PlayerMCTS Playermcts;
+    public PlayerVSMCTS ennemi;
     public GameObject myHealthBar;
     public int myHealth = 100;
-    bool inRange;
+    [HideInInspector]
+    public bool inRange;
 
     // Move
+    [HideInInspector]
     public float moveSpeed;
     public Rigidbody2D RigidbodyPlayer;
     Vector3 velocity = Vector3.zero;
 
     // Jump
-    bool isjumping = false;
-    bool isGrounding = false;
+    [HideInInspector]
+    public bool isjumping = false;
+    [HideInInspector]
+    public bool isGrounding = false;
+    [HideInInspector]
     public float jumpforce;
-    [SerializeField] Transform GroundCheckLeft;
-    [SerializeField] Transform GroundCheckRight;
+    [SerializeField] public Transform GroundCheckLeft;
+    [SerializeField] public Transform GroundCheckRight;
 
     // Animation
     public Animator animator;
 
     // Attack
-    bool isAttacking = false;
+    [HideInInspector]
+    public bool isAttacking = false;
     [SerializeField] GameObject hitboxAttack;
 
     // Event
@@ -59,14 +67,14 @@ public class PlayerMCTS : MonoBehaviour
                 isAttacking = true;
                 animator.Play("PlayerPunch");
                 StartCoroutine(DoAttack());
-                if (inRange) Punch(secondPlayer);
+                if (inRange) Punch(ennemi);
                 break;
             case 2:
                 StartCoroutine(waitAttack());
                 isAttacking = true;
                 animator.Play("PlayerKick");
                 StartCoroutine(DoAttack());
-                if (inRange) Kick(secondPlayer);
+                if (inRange) Kick(ennemi);
                 break;
             case 3:
                 Move(5);
@@ -96,7 +104,7 @@ public class PlayerMCTS : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerPunch");
             StartCoroutine(DoAttack());
-            if (inRange) Punch(secondPlayer);
+            if (inRange) Punch(ennemi);
         }
 
         if (Input.GetButtonDown("Fire2") && !isAttacking)
@@ -104,7 +112,7 @@ public class PlayerMCTS : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerKick");
             StartCoroutine(DoAttack());
-            if (inRange) Kick(secondPlayer);
+            if (inRange) Kick(ennemi);
         }
     }
 
@@ -123,8 +131,8 @@ public class PlayerMCTS : MonoBehaviour
 
     public void ChangeDirection()
     {
-        if (RigidbodyPlayer.velocity.x > 0.1f) player.flipX = false;
-        else if (RigidbodyPlayer.velocity.x < -0.1f) player.flipX = true;
+        if (RigidbodyPlayer.velocity.x > 0.1f) playerMCTSSprite.flipX = false;
+        else if (RigidbodyPlayer.velocity.x < -0.1f) playerMCTSSprite.flipX = true;
     }
 
     public IEnumerator DoAttack()
@@ -140,13 +148,13 @@ public class PlayerMCTS : MonoBehaviour
         yield return new WaitForSeconds(5f);
     }
 
-   public void Punch(PlayerVsIA enemie)
+   public void Punch(PlayerVSMCTS enemie)
     {
         enemie.myHealth -= 10;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
     }
 
-   public void Kick(PlayerVsIA enemie)
+   public void Kick(PlayerVSMCTS enemie)
     {
         enemie.myHealth -= 20;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
