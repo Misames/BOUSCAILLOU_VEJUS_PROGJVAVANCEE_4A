@@ -7,8 +7,8 @@ public class SecondPlayer : MonoBehaviour
     // Player
     [SerializeField] Player secondPlayer;
     public SpriteRenderer player;
-    public GameObject myHealthBar;
-    public int myHealth = 100;
+    public Slider UIHealth;
+    public byte myHealth = 100;
     bool inRange;
 
     // Move
@@ -27,8 +27,8 @@ public class SecondPlayer : MonoBehaviour
     public Animator animator;
 
     // variable attack
-    bool isAttacking = false;
     [SerializeField] GameObject hitboxAttack;
+    bool isAttacking = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -106,12 +106,12 @@ public class SecondPlayer : MonoBehaviour
     void Punch(Player enemie)
     {
         enemie.myHealth -= 10;
-        enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
+        enemie.UIHealth.value = enemie.myHealth;
     }
 
     void Kick(Player enemie)
     {
         enemie.myHealth -= 20;
-        enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
+        enemie.UIHealth.value = enemie.myHealth;
     }
 }

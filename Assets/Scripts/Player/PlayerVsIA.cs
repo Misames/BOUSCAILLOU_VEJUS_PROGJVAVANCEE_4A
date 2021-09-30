@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 public class PlayerVsIA : MonoBehaviour
 {
     // Player
     public SpriteRenderer player;
     [SerializeField] IAPlayer _iaPlayer;
-    public GameObject myHealthBar;
+    public Slider UIHealth;
     public int myHealth = 100;
     bool inRange;
 
@@ -44,7 +43,7 @@ public class PlayerVsIA : MonoBehaviour
     void Start()
     {
         hitboxAttack.SetActive(false);
-        myHealthBar.GetComponent<Slider>().value = myHealth;
+        UIHealth.value = myHealth;
     }
 
     void FixedUpdate()
@@ -108,12 +107,12 @@ public class PlayerVsIA : MonoBehaviour
     void Punch(IAPlayer enemie)
     {
         enemie.myHealth -= 10;
-        enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
+        enemie.UIHealth.value = enemie.myHealth;
     }
 
     void Kick(IAPlayer enemie)
     {
         enemie.myHealth -= 20;
-        enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
+        enemie.UIHealth.value = enemie.myHealth;
     }
 }
