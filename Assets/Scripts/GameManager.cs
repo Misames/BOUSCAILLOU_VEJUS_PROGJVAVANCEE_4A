@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -9,8 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] SecondPlayer secondPlayer;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject endScreen;
-    [SerializeField] GameObject txtEnd;
     [SerializeField] Text textTime;
+    [SerializeField] Text textEnd;
     [SerializeField] float gameDuration = 60;
     bool isPause;
 
@@ -18,7 +17,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         isPause = false;
-        
     }
 
     void Update()
@@ -27,12 +25,12 @@ public class GameManager : MonoBehaviour
         textTime.text = Mathf.RoundToInt(gameDuration).ToString();
         if (gameDuration <= 0)
         {
-            if (firstPlayer.myHealth > secondPlayer.myHealth) endGame("Joueur 1");
-            else if (firstPlayer.myHealth < secondPlayer.myHealth) endGame("Joueur 2");
-            else endGame("");
+            if (firstPlayer.myHealth > secondPlayer.myHealth) EndGame("Joueur 1");
+            else if (firstPlayer.myHealth < secondPlayer.myHealth) EndGame("Joueur 2");
+            else EndGame("");
         }
-        if (firstPlayer.myHealth <= 0) endGame("Joueur 2");
-        if (secondPlayer.myHealth <= 0) endGame("Joueur 1");
+        if (firstPlayer.myHealth <= 0) EndGame("Joueur 2");
+        if (secondPlayer.myHealth <= 0) EndGame("Joueur 1");
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPause) ResumeGame();
@@ -40,13 +38,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void endGame(string namePlayer)
+    public void EndGame(string namePlayer)
     {
         Time.timeScale = 0f;
         endScreen.SetActive(true);
-        Text monText = txtEnd.GetComponent<Text>();
-        if (namePlayer != "") monText.text = $"Le gagant est {namePlayer}";
-        else monText.text = "Match nul !";
+        if (namePlayer != "") textEnd.text = $"Le gagant est {namePlayer}";
+        else textEnd.text = "Match nul !";
     }
 
     public void ResumeGame()
@@ -76,5 +73,4 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-
 }

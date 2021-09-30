@@ -8,8 +8,8 @@ public class GameManagerIA : MonoBehaviour
     [SerializeField] IAPlayer secondPlayer;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject endScreen;
-    [SerializeField] GameObject txtEnd;
     [SerializeField] Text textTime;
+    [SerializeField] Text textEnd;
     [SerializeField] float gameDuration = 60;
     bool isPause;
 
@@ -25,12 +25,12 @@ public class GameManagerIA : MonoBehaviour
         textTime.text = Mathf.RoundToInt(gameDuration).ToString();
         if (gameDuration <= 0)
         {
-            if (firstPlayer.myHealth > secondPlayer.myHealth) endGame("Joueur 1");
-            else if (firstPlayer.myHealth < secondPlayer.myHealth) endGame("Joueur 2");
-            else endGame("");
+            if (firstPlayer.myHealth > secondPlayer.myHealth) GameOver("Joueur 1");
+            else if (firstPlayer.myHealth < secondPlayer.myHealth) GameOver("Joueur 2");
+            else GameOver("");
         }
-        if (firstPlayer.myHealth <= 0) endGame("Joueur 2");
-        if (secondPlayer.myHealth <= 0) endGame("Joueur 1");
+        if (firstPlayer.myHealth <= 0) GameOver("Joueur 2");
+        if (secondPlayer.myHealth <= 0) GameOver("Joueur 1");
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPause) ResumeGame();
@@ -38,13 +38,12 @@ public class GameManagerIA : MonoBehaviour
         }
     }
 
-    public void endGame(string namePlayer)
+    public void GameOver(string namePlayer)
     {
         Time.timeScale = 0f;
         endScreen.SetActive(true);
-        Text monText = txtEnd.GetComponent<Text>();
-        if (namePlayer != "") monText.text = $"Le gagant est {namePlayer}";
-        else monText.text = "Match nul !";
+        if (namePlayer != "") textEnd.text = $"Le gagant est {namePlayer}";
+        else textEnd.text = "Match nul !";
     }
 
     public void ResumeGame()
