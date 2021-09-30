@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class MoveRightMCTS : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Vector2 posJ2;
+    public float ValMove;
+    void MovePlayerRight()
     {
-        
+        if (posJ2.x >= 20)
+        {
+            posJ2.x += 0;
+        }
+        else
+        {
+            posJ2.x += ValMove;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -6,7 +6,7 @@ public class PunchMCTS : MonoBehaviour
 {
     public float punchCd = 0.5f;
     public Vector2 hitCol;
-    public int j2life = 100;
+    public int j2Life = 100;
     public Vector2 posJ2;
     public bool isFinish = false;
     public bool punchActif = true;
@@ -38,8 +38,8 @@ public class PunchMCTS : MonoBehaviour
         {
             if (posJ2.x == hitCol.x && posJ2.y == hitCol.y)
             {
-                j2life -= 20;
-                if (j2life <= 0)
+                j2Life -= 20;
+                if (j2Life <= 0)
                 {
                     isFinish = true;
                 }

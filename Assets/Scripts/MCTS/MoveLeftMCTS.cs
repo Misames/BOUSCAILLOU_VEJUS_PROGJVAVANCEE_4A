@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class MoveLeftMCTS : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Vector2 posJ2;
+    public float ValMove;
+    void MovePlayerLeft()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (posJ2.x <= 0)
+        {
+            posJ2.x += 0;
+        }
+        else
+        {
+            posJ2.x -= ValMove;
+        }
     }
 }
