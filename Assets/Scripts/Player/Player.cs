@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public SpriteRenderer player;
     public SecondPlayer secondPlayer;
     public Slider UIHealth;
-    public byte myHealth = 100;
+    public int myHealth = 100;
     bool inRange;
 
     // Move
@@ -27,8 +27,8 @@ public class Player : MonoBehaviour
     public Animator animator;
 
     // Attack
-    bool isAttacking = false;
     [SerializeField] GameObject hitboxAttack;
+    bool isAttacking = false;
 
     // Event
     void OnTriggerEnter2D(Collider2D other)

@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         isPause = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -40,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     public void EndGame(string namePlayer)
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0f;
         endScreen.SetActive(true);
         if (namePlayer != "") textEnd.text = $"Le gagant est {namePlayer}";

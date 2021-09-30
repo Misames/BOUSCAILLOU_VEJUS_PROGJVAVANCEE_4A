@@ -7,8 +7,8 @@ public class IAPlayer : MonoBehaviour
     // Player
     public SpriteRenderer player;
     public PlayerVsIA secondPlayer;
-    public GameObject myHealthBar;
     public int myHealth = 100;
+    public Slider UIHealth;
     bool inRange;
 
     // Move
@@ -34,7 +34,7 @@ public class IAPlayer : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
-        
+
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -45,25 +45,13 @@ public class IAPlayer : MonoBehaviour
     void Start()
     {
         hitboxAttack.SetActive(false);
-        myHealthBar.GetComponent<Slider>().value = myHealth;
+        UIHealth.value = myHealth;
     }
-
- /*   void FixedUpdate()
-    {
-        isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
-        float Horizontalmove = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounding == true) isjumping = true;
-        ChangeDirection();
-        Move(Horizontalmove);
-        // on converti la vitesse du joueur pour qu'elle soit toujours positive
-        float characterVelocity = Mathf.Abs(RigidbodyPlayer.velocity.x);
-        animator.SetFloat("speed", characterVelocity);
-    } */
 
     void Update()
     {
         int rand = Random.Range(1, 6);
-        
+
         switch (rand)
         {
             case 1:
@@ -88,17 +76,15 @@ public class IAPlayer : MonoBehaviour
                 Move(-5);
                 ChangeDirection();
                 break;
-            case 5 :
+            case 5:
                 isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
                 if (isGrounding)
                 {
                     animator.Play("PlayerJump");
                     RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpforce));
-                    isjumping = false; 
+                    isjumping = false;
                 }
-                
                 break;
-
             default:
                 break;
         }
@@ -155,12 +141,12 @@ public class IAPlayer : MonoBehaviour
     void Punch(PlayerVsIA enemie)
     {
         enemie.myHealth -= 10;
-        enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
+        enemie.UIHealth.value = enemie.myHealth;
     }
 
     void Kick(PlayerVsIA enemie)
     {
         enemie.myHealth -= 20;
-        enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
+        enemie.UIHealth.value = enemie.myHealth;
     }
 }
