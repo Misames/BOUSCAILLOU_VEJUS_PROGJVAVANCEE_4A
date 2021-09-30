@@ -120,7 +120,7 @@ public class IAPlayer : MonoBehaviour
         }
     }
 
-    void Move(float _Horizontalmove)
+   public void Move(float _Horizontalmove)
     {
         Vector3 targetVelocity = new Vector2(_Horizontalmove, RigidbodyPlayer.velocity.y);
         RigidbodyPlayer.velocity = Vector3.SmoothDamp(RigidbodyPlayer.velocity, targetVelocity, ref velocity, 0.05f);
@@ -133,13 +133,13 @@ public class IAPlayer : MonoBehaviour
         }
     }
 
-    void ChangeDirection()
+    public void ChangeDirection()
     {
         if (RigidbodyPlayer.velocity.x > 0.1f) player.flipX = false;
         else if (RigidbodyPlayer.velocity.x < -0.1f) player.flipX = true;
     }
 
-    IEnumerator DoAttack()
+    public IEnumerator DoAttack()
     {
         hitboxAttack.SetActive(true);
         yield return new WaitForSeconds(.2f);
@@ -147,18 +147,18 @@ public class IAPlayer : MonoBehaviour
         isAttacking = false;
     }
 
-    IEnumerator waitAttack()
+    public IEnumerator waitAttack()
     {
         yield return new WaitForSeconds(5f);
     }
 
-    void Punch(PlayerVsIA enemie)
+   public void Punch(PlayerVsIA enemie)
     {
         enemie.myHealth -= 10;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
     }
 
-    void Kick(PlayerVsIA enemie)
+   public void Kick(PlayerVsIA enemie)
     {
         enemie.myHealth -= 20;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
