@@ -826,19 +826,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 514838059}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45a61910e981200468da12663b096c75, type: 3}
+  m_Script: {fileID: 11500000, guid: 76cb807893fb6764da65fe1c3b754692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIHealth: {fileID: 434942048}
-  myHealth: 100
   player: {fileID: 514838063}
-  secondPlayer: {fileID: 1703448493}
+  secondPlayer: {fileID: 0}
   animator: {fileID: 514838066}
   RigidbodyPlayer: {fileID: 514838060}
   GroundCheckLeft: {fileID: 2048290506}
   GroundCheckRight: {fileID: 1409927373}
   moveSpeed: 300
-  jumpforce: 500
+  jumpForce: 500
+  myHealth: 100
+  UIHealth: {fileID: 434942048}
 --- !u!212 &514838063
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2329,16 +2329,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5541810c79859564e918ae6bb10cc50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondPlayer: {fileID: 514838062}
   player: {fileID: 1703448494}
-  UIHealth: {fileID: 910324610}
-  myHealth: 100
-  moveSpeed: 300
+  secondPlayer: {fileID: 0}
+  animator: {fileID: 1703448492}
   RigidbodyPlayer: {fileID: 1703448489}
-  jumpforce: 500
   GroundCheckLeft: {fileID: 820676490}
   GroundCheckRight: {fileID: 1728099720}
-  animator: {fileID: 1703448492}
+  moveSpeed: 300
+  jumpForce: 500
+  myHealth: 100
+  UIHealth: {fileID: 910324610}
 --- !u!212 &1703448494
 SpriteRenderer:
   m_ObjectHideFlags: 0
