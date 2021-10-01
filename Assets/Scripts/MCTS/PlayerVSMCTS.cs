@@ -1,13 +1,14 @@
 using System.Collections;
-using UnityEngine.UI;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class PlayerVSMCTS : MonoBehaviour
 {
-    // Player
+      // Player
     public SpriteRenderer player;
-    public SecondPlayer secondPlayer;
-    public Slider UIHealth;
+    [SerializeField] PlayerMCTS secondPlayer;
+    public GameObject myHealthBar;
     public int myHealth = 100;
     bool inRange;
 
@@ -28,22 +29,23 @@ public class Player : MonoBehaviour
 
     // Attack
     bool isAttacking = false;
+    [SerializeField] GameObject hitboxAttack;
 
     // Event
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
-        {
-            inRange = true;
-        }
+        if (other.tag == "Player") inRange = true;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Player")
-        {
-            inRange = false;
-        }
+        if (other.tag == "Player") inRange = false;
+    }
+
+    void Start()
+    {
+        hitboxAttack.SetActive(false);
+        myHealthBar.GetComponent<Slider>().value = myHealth;
     }
 
     void FixedUpdate()
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerPunch");
             StartCoroutine(DoAttack());
-            if (inRange) Attack(secondPlayer, 10);
+            if (inRange) Punch(secondPlayer);
         }
 
         if (Input.GetButtonDown("Fire2") && !isAttacking)
@@ -73,7 +75,7 @@ public class Player : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerKick");
             StartCoroutine(DoAttack());
-            if (inRange) Attack(secondPlayer, 20);
+            if (inRange) Kick(secondPlayer);
         }
     }
 
@@ -98,14 +100,21 @@ public class Player : MonoBehaviour
 
     IEnumerator DoAttack()
     {
+        hitboxAttack.SetActive(true);
         yield return new WaitForSeconds(.2f);
+        hitboxAttack.SetActive(false);
         isAttacking = false;
     }
 
-    void Attack(SecondPlayer enemie, int damage)
+    void Punch(PlayerMCTS enemie)
     {
-        enemie.myHealth -= damage;
-        enemie.UIHealth.value = enemie.myHealth;
+        enemie.myHealth -= 10;
+        enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
     }
 
+    void Kick(PlayerMCTS enemie)
+    {
+        enemie.myHealth -= 20;
+        enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
+    }
 }

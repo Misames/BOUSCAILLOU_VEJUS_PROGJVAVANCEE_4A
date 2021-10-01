@@ -27,7 +27,6 @@ public class PlayerVsIA : MonoBehaviour
 
     // Attack
     bool isAttacking = false;
-    [SerializeField] GameObject hitboxAttack;
 
     // Event
     void OnTriggerEnter2D(Collider2D other)
@@ -38,12 +37,6 @@ public class PlayerVsIA : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = false;
-    }
-
-    void Start()
-    {
-        hitboxAttack.SetActive(false);
-        UIHealth.value = myHealth;
     }
 
     void FixedUpdate()
@@ -65,7 +58,7 @@ public class PlayerVsIA : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerPunch");
             StartCoroutine(DoAttack());
-            if (inRange) Punch(_iaPlayer);
+            if (inRange) Attack(_iaPlayer, 10);
         }
 
         if (Input.GetButtonDown("Fire2") && !isAttacking)
@@ -73,7 +66,7 @@ public class PlayerVsIA : MonoBehaviour
             isAttacking = true;
             animator.Play("PlayerKick");
             StartCoroutine(DoAttack());
-            if (inRange) Kick(_iaPlayer);
+            if (inRange) Attack(_iaPlayer, 20);
         }
     }
 
@@ -98,21 +91,13 @@ public class PlayerVsIA : MonoBehaviour
 
     IEnumerator DoAttack()
     {
-        hitboxAttack.SetActive(true);
         yield return new WaitForSeconds(.2f);
-        hitboxAttack.SetActive(false);
         isAttacking = false;
     }
 
-    void Punch(IAPlayer enemie)
+    void Attack(IAPlayer enemie, int damage)
     {
-        enemie.myHealth -= 10;
-        enemie.UIHealth.value = enemie.myHealth;
-    }
-
-    void Kick(IAPlayer enemie)
-    {
-        enemie.myHealth -= 20;
+        enemie.myHealth -= damage;
         enemie.UIHealth.value = enemie.myHealth;
     }
 }

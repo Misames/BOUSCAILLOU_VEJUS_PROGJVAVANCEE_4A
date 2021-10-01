@@ -6,10 +6,10 @@ public class PunchMCTS : MonoBehaviour
 {
     public float punchCd = 0.5f;
     public Vector2 hitCol;
-    public int j2Life = 100;
     public Vector2 posJ2;
     public bool isFinish = false;
     public bool punchActif = true;
+    public GameManagerMCTS _gameManagerMcts;
     
     private void Start()
     {
@@ -31,19 +31,24 @@ public class PunchMCTS : MonoBehaviour
         }
     }
 
-    public void Punch()
+    public void Punch(Vector2 player)
     {
-        // Si on peut utiliser le punch
-        if (punchActif == true)
-        {
-            if (posJ2.x == hitCol.x && posJ2.y == hitCol.y)
+        
+            // Initialisation du Collider Virtuel pour le hit damage
+            hitCol = new Vector2(player.x +1 ,player.y +1);
+            // Si on peut utiliser le Kick
+            if (punchActif == true)
             {
-                j2Life -= 20;
-                if (j2Life <= 0)
+                if (player.x == hitCol.x && player.y == hitCol.y)
                 {
-                    isFinish = true;
+                    _gameManagerMcts.lifeJ1 -= 20;
+                    if (_gameManagerMcts.lifeJ1 <= 0)
+                    {
+                        isFinish = true;
+                        _gameManagerMcts.TotalResultat(1); 
+                    }
+                    
                 }
-            }
         }
     }
     
