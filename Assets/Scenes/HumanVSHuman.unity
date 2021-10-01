@@ -830,7 +830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 514838063}
-  secondPlayer: {fileID: 1703448493}
+  secondPlayer: {fileID: 0}
   animator: {fileID: 514838066}
   RigidbodyPlayer: {fileID: 514838060}
   GroundCheckLeft: {fileID: 2048290506}
@@ -2330,8 +2330,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1703448494}
+<<<<<<< HEAD:Assets/Scenes/Human.unity
   secondPlayer: {fileID: 514838062}
   animator: {fileID: 514838066}
+=======
+  secondPlayer: {fileID: 0}
+  animator: {fileID: 1703448492}
+>>>>>>> master:Assets/Scenes/HumanVSHuman.unity
   RigidbodyPlayer: {fileID: 1703448489}
   GroundCheckLeft: {fileID: 820676490}
   GroundCheckRight: {fileID: 1728099720}
