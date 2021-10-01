@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KickMCTS : MonoBehaviour
@@ -9,33 +6,24 @@ public class KickMCTS : MonoBehaviour
     public Vector2 hitCol;
     public bool isFinish = false;
     public bool kickActif = true;
-    private GameManagerMCTS _gameManagerMcts;
-    
-    private void Start()
-    {
-        
-    }
-    
-    private void Update()
+    GameManagerMCTS _gameManagerMcts;
+
+    void Update()
     {
         // Lancement Cooldown kick
-        if (kickActif == true)
-        {
-            kickCd -= Time.deltaTime;
-        }
-        // reset Cooldown kick
-        if (kickCd <= 0)
-        {
-            kickCd = 0.5f;
-        }
+        if (kickActif) kickCd -= Time.deltaTime;
+
+        // Reset Cooldown kick
+        if (kickCd <= 0) kickCd = 0.5f;
     }
 
-   public void Kick(Vector2 player)
+    public void Kick(Vector2 player)
     {
         // Initialisation du Collider Virtuel pour le hit damage
-        hitCol = new Vector2(player.x +1 ,player.y +1);
+        hitCol = new Vector2(player.x + 1, player.y + 1);
+
         // Si on peut utiliser le Kick
-        if (kickActif == true)
+        if (kickActif)
         {
             if (player.x == hitCol.x && player.y == hitCol.y)
             {
@@ -48,17 +36,16 @@ public class KickMCTS : MonoBehaviour
             }
         }
     }
-    
-   // Active ou desactive la possibilité de Kick
-   public void KickActive()
+
+    // Active ou desactive la possibilité de Kick
+    public void KickActive()
     {
         kickActif = !kickActif;
     }
-   
+
     // Renvoie si l'action est disponible ou pas 
-    
-   public bool KickIsActive()
-   {
-       return kickActif;
-   }
+    public bool KickIsActive()
+    {
+        return kickActif;
+    }
 }

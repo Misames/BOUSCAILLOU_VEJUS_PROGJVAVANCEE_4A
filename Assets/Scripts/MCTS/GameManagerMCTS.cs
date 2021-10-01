@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,25 +28,19 @@ public class GameManagerMCTS : MonoBehaviour
     private bool endSimu = false;
     private int compteur = 0;
     public PlayerMCTS _playerMCTS;
-    
-    
-    
-    
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject endScreen;
     [SerializeField] GameObject txtEnd;
     [SerializeField] Text textTime;
     [SerializeField] float gameDuration = 60;
     bool isPause;
-    
-   
 
-    private void Start()
+    void Start()
     {
         //init game
         Time.timeScale = 1f;
         isPause = false;
-        
+
         //init des joueurs virtuel
         lifeJ1 = 100;
         lifeJ2 = 100;
@@ -60,9 +51,8 @@ public class GameManagerMCTS : MonoBehaviour
         player2pos.y = 0;
     }
 
-    private void Update()
+    void Update()
     {
-        
         gameDuration -= Time.deltaTime;
         textTime.text = Mathf.RoundToInt(gameDuration).ToString();
         if (gameDuration <= 0)
@@ -78,11 +68,11 @@ public class GameManagerMCTS : MonoBehaviour
             if (isPause) ResumeGame();
             else PauseGame();
         }
-        
+
         ChoixActionSimu();
-        if (endSimu = true)
+        if (endSimu)
         {
-            
+
         }
     }
 
@@ -93,14 +83,14 @@ public class GameManagerMCTS : MonoBehaviour
         switch (rand)
         {
             case 1:
-               
+
                 _playerMCTS.isAttacking = true;
                 _playerMCTS.animator.Play("PlayerPunch");
                 StartCoroutine(_playerMCTS.DoAttack());
                 if (_playerMCTS.inRange) _playerMCTS.Punch(player1);
                 break;
             case 2:
-               
+
                 _playerMCTS.isAttacking = true;
                 _playerMCTS.animator.Play("PlayerKick");
                 StartCoroutine(_playerMCTS.DoAttack());
@@ -122,7 +112,8 @@ public class GameManagerMCTS : MonoBehaviour
                     _playerMCTS.RigidbodyPlayer.AddForce(new Vector2(0.0f, _playerMCTS.jumpforce));
                     _playerMCTS.isjumping = false;
                 }
-
+                break;
+            default:
                 break;
         }
     }
@@ -130,58 +121,60 @@ public class GameManagerMCTS : MonoBehaviour
     {
         if (lifeJ2 != 0 && compteur != 20)
         {
-             if (precedenteAction != 5)
-                   {
-                       int rand = Random.Range(1, 6);
-           
-                       switch (rand)
-                       {
-                           case 1 :
-                               _moveLeftMcts.MovePlayerLeft(player2pos);
-                               precedenteAction = 1;
-                               break;
-                           case 2 : 
-                               _moveRightMcts.MovePlayerRight(player2pos);
-                               precedenteAction = 2;
-                               break;
-                           case 3 : 
-                               _kickMcts.Kick(player2pos);
-                               precedenteAction = 3;
-                               break;
-                           case 4 :
-                               _punchMcts.Punch(player2pos);
-                               precedenteAction = 4;
-                               break;
-                           case 5 :
-                               _jumpMcts.Jump(player2pos);
-                               precedenteAction = 5;
-                               break;
-                       }
-                   }
-                   else
-                   {
-                       int rand = Random.Range(1, 5);
-           
-                       switch (rand)
-                       {
-                           case 1:
-                               _moveLeftMcts.MovePlayerLeft(player2pos);
-                               precedenteAction = 1;
-                               break;
-                           case 2:
-                               _moveRightMcts.MovePlayerRight(player2pos);
-                               precedenteAction = 2;
-                               break;
-                           case 3:
-                               _kickMcts.Kick(player2pos);
-                               precedenteAction = 3;
-                               break;
-                           case 4:
-                               _punchMcts.Punch(player2pos);
-                               precedenteAction = 4;
-                               break;
-                       }
-                   } 
+            if (precedenteAction != 5)
+            {
+                int rand = Random.Range(1, 6);
+                switch (rand)
+                {
+                    case 1:
+                        _moveLeftMcts.MovePlayerLeft(player2pos);
+                        precedenteAction = 1;
+                        break;
+                    case 2:
+                        _moveRightMcts.MovePlayerRight(player2pos);
+                        precedenteAction = 2;
+                        break;
+                    case 3:
+                        _kickMcts.Kick(player2pos);
+                        precedenteAction = 3;
+                        break;
+                    case 4:
+                        _punchMcts.Punch(player2pos);
+                        precedenteAction = 4;
+                        break;
+                    case 5:
+                        _jumpMcts.Jump(player2pos);
+                        precedenteAction = 5;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                int rand = Random.Range(1, 5);
+                switch (rand)
+                {
+                    case 1:
+                        _moveLeftMcts.MovePlayerLeft(player2pos);
+                        precedenteAction = 1;
+                        break;
+                    case 2:
+                        _moveRightMcts.MovePlayerRight(player2pos);
+                        precedenteAction = 2;
+                        break;
+                    case 3:
+                        _kickMcts.Kick(player2pos);
+                        precedenteAction = 3;
+                        break;
+                    case 4:
+                        _punchMcts.Punch(player2pos);
+                        precedenteAction = 4;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         else
         {
@@ -189,8 +182,8 @@ public class GameManagerMCTS : MonoBehaviour
             compteur++;
         }
     }
-    
-    
+
+
     public void TotalResultat(int resultat)
     {
         totalResult += resultat;
@@ -199,54 +192,50 @@ public class GameManagerMCTS : MonoBehaviour
 
     public void ResultSimu(float totalResult)
     {
-        totalpourcentage = (totalResult / nbTotal)* 100;
+        totalpourcentage = (totalResult / nbTotal) * 100;
     }
-   public int EndGame(int code)
+    public int EndGame(int code)
     {
         return code;
     }
-   
-   // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-   // // // // // //                                FONCTION MENU             // // // // // // // // // // // //
-   // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-   public void endGame(string namePlayer)
-   {
-       Time.timeScale = 0f;
-       endScreen.SetActive(true);
-       Text monText = txtEnd.GetComponent<Text>();
-       if (namePlayer != "") monText.text = $"Le gagant est {namePlayer}";
-       else monText.text = "Match nul !";
-   }
 
-   public void ResumeGame()
-   {
-       pauseMenu.SetActive(false);
-       Cursor.lockState = CursorLockMode.Locked;
-       Cursor.visible = false;
-       Time.timeScale = 1f;
-       isPause = false;
-   }
+    // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+    // // // // // //                                FONCTION MENU             // // // // // // // // // // // //
+    // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+    public void endGame(string namePlayer)
+    {
+        Time.timeScale = 0f;
+        endScreen.SetActive(true);
+        Text monText = txtEnd.GetComponent<Text>();
+        if (namePlayer != "") monText.text = $"Le gagant est {namePlayer}";
+        else monText.text = "Match nul !";
+    }
 
-   public void PauseGame()
-   {
-       Time.timeScale = 0f;
-       isPause = true;
-       pauseMenu.SetActive(true);
-       Cursor.lockState = CursorLockMode.None;
-       Cursor.visible = true;
-   }
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1f;
+        isPause = false;
+    }
 
-   public void Replay()
-   {
-       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-   }
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        isPause = true;
+        pauseMenu.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 
-   public void Quit()
-   {
-       SceneManager.LoadScene(0);
-   }
-   
-   
-   
-   
+    public void Replay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Quit()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

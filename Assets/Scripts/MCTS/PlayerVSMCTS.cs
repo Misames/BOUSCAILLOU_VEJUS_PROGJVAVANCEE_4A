@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerVSMCTS : MonoBehaviour
 {
-      // Player
+    // Player
     public SpriteRenderer player;
     [SerializeField] PlayerMCTS secondPlayer;
     public GameObject myHealthBar;

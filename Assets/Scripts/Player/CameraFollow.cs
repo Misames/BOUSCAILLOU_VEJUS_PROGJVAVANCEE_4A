@@ -1,12 +1,11 @@
-
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameObject player;
-    public float timeOffset;
-    public Vector3 positionOffset;
-    public Vector3 velocity;
+    [SerializeField] GameObject player;
+    [SerializeField] Vector3 positionOffset, velocity;
+    [SerializeField] float timeOffset;
+
     void Update()
     {
         transform.position = Vector3.SmoothDamp(transform.position, player.transform.position + positionOffset,

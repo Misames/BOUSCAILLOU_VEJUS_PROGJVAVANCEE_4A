@@ -830,16 +830,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 514838063}
-  _iaPlayer: {fileID: 1703448493}
-  UIHealth: {fileID: 434942048}
-  myHealth: 100
-  moveSpeed: 300
+  secondPlayer: {fileID: 1703448493}
+  animator: {fileID: 514838066}
   RigidbodyPlayer: {fileID: 514838060}
-  jumpforce: 500
   GroundCheckLeft: {fileID: 2048290506}
   GroundCheckRight: {fileID: 1409927373}
-  animator: {fileID: 514838066}
-  hitboxAttack: {fileID: 1357686969}
+  moveSpeed: 300
+  jumpForce: 500
+  myHealth: 100
+  UIHealth: {fileID: 434942048}
 --- !u!212 &514838063
 SpriteRenderer:
   m_ObjectHideFlags: 0

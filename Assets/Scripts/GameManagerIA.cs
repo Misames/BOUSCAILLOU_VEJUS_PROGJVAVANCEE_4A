@@ -23,16 +23,24 @@ public class GameManagerIA : MonoBehaviour
 
     void Update()
     {
+        // Update l'UI
         gameDuration -= Time.deltaTime;
         textTime.text = Mathf.RoundToInt(gameDuration).ToString();
+
+        // Check le temps écoulé
         if (gameDuration <= 0)
         {
+            // Détermine un Gagant à la fin du tempss
             if (firstPlayer.myHealth > secondPlayer.myHealth) GameOver("Joueur 1");
             else if (firstPlayer.myHealth < secondPlayer.myHealth) GameOver("Joueur 2");
             else GameOver("");
         }
+
+        // Choisi un gagnant quand un des deux n'a plus de point de vie
         if (firstPlayer.myHealth <= 0) GameOver("Joueur 2");
         if (secondPlayer.myHealth <= 0) GameOver("Joueur 1");
+
+        // Action qui met en pause
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPause) ResumeGame();
@@ -40,6 +48,8 @@ public class GameManagerIA : MonoBehaviour
         }
     }
 
+
+    // Affiche l'écran de fin de partie en fonction du nom du joueur gagnant
     public void GameOver(string namePlayer)
     {
         Cursor.lockState = CursorLockMode.None;
@@ -50,6 +60,7 @@ public class GameManagerIA : MonoBehaviour
         else textEnd.text = "Match nul !";
     }
 
+    // Fait reprend la partie
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
@@ -59,6 +70,7 @@ public class GameManagerIA : MonoBehaviour
         isPause = false;
     }
 
+    // Met en pause la partie encours
     public void PauseGame()
     {
         Time.timeScale = 0f;
@@ -68,11 +80,13 @@ public class GameManagerIA : MonoBehaviour
         Cursor.visible = true;
     }
 
+    // Recharge la scène
     public void Replay()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    // Retourne au menu pricncipale
     public void Quit()
     {
         SceneManager.LoadScene(0);

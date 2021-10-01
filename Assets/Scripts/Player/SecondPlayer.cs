@@ -4,32 +4,20 @@ using UnityEngine;
 
 public class SecondPlayer : MonoBehaviour
 {
-    // Player
+    [SerializeField] SpriteRenderer player;
     [SerializeField] Player secondPlayer;
-    public SpriteRenderer player;
-    public Slider UIHealth;
+    [SerializeField] Animator animator;
+    [SerializeField] Rigidbody2D RigidbodyPlayer;
+    [SerializeField] Transform GroundCheckLeft;
+    [SerializeField] Transform GroundCheckRight;
+    [SerializeField] float moveSpeed = 300f;
+    [SerializeField] float jumpForce = 500f;
+    Vector3 velocity = Vector3.zero;
+    bool isjumping, isGrounding, isAttacking, inRange = false;
     public int myHealth = 100;
-    bool inRange;
+    public Slider UIHealth;
 
-    // Move
-    public float moveSpeed;
-    public Rigidbody2D RigidbodyPlayer;
-    private Vector3 velocity = Vector3.zero;
-
-    // Jump
-    bool isjumping = false;
-    bool isGrounding = false;
-    public float jumpforce;
-    public Transform GroundCheckLeft;
-    public Transform GroundCheckRight;
-
-    // Animation
-    public Animator animator;
-
-    // variable attack
-    bool isAttacking = false;
-
-    // Events
+    // Permet de déterminer si no Player est à porter pour attaquer
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
@@ -44,9 +32,12 @@ public class SecondPlayer : MonoBehaviour
     {
         isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
         float Horizontalmove = Input.GetAxis("Horizontal Joueur2") * moveSpeed * Time.deltaTime;
+
         if (Input.GetKeyDown(KeyCode.Z) && isGrounding == true) isjumping = true;
+
         ChangeDirection();
         Move(Horizontalmove);
+
         // on converti la vitesse du joueur pour qu'elle soit toujours positive
         float characterVelocity = Mathf.Abs(RigidbodyPlayer.velocity.x);
         animator.SetFloat("speed", characterVelocity);
@@ -54,6 +45,7 @@ public class SecondPlayer : MonoBehaviour
 
     void Update()
     {
+        // Coup de Poing
         if (Input.GetButtonDown("Fire1 joueur2") && !isAttacking)
         {
             isAttacking = true;
@@ -62,6 +54,7 @@ public class SecondPlayer : MonoBehaviour
             if (inRange) Attack(secondPlayer, 10);
         }
 
+        // Coup de Pied
         if (Input.GetButtonDown("Fire2 Joueur2") && !isAttacking)
         {
             isAttacking = true;
@@ -71,19 +64,23 @@ public class SecondPlayer : MonoBehaviour
         }
     }
 
+    // Permet de mouvoir le Player
+    // Horizontalement et verticalement avec le saut
     void Move(float _Horizontalmove)
     {
         Vector3 targetVelocity = new Vector2(_Horizontalmove, RigidbodyPlayer.velocity.y);
         RigidbodyPlayer.velocity = Vector3.SmoothDamp(RigidbodyPlayer.velocity, targetVelocity, ref velocity, 0.05f);
 
+        // Saut
         if (isjumping)
         {
             animator.Play("PlayerJump");
-            RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpforce));
+            RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpForce));
             isjumping = false;
         }
     }
 
+    // Change l'orientation du Player
     void ChangeDirection()
     {
         if (RigidbodyPlayer.velocity.x > 0.1f) player.flipX = false;
@@ -96,6 +93,7 @@ public class SecondPlayer : MonoBehaviour
         isAttacking = false;
     }
 
+    // Attaquer un enemie et lui retire des PV
     void Attack(Player enemie, int damage)
     {
         enemie.myHealth -= damage;

@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerMCTS : MonoBehaviour
 {
-   // Player
+    // Player
     public SpriteRenderer playerMCTSSprite;
     public PlayerMCTS Playermcts;
     public PlayerVSMCTS ennemi;
@@ -42,7 +41,7 @@ public class PlayerMCTS : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
-        
+
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -59,7 +58,6 @@ public class PlayerMCTS : MonoBehaviour
     void Update()
     {
         int rand = Random.Range(1, 6);
-        
         switch (rand)
         {
             case 1:
@@ -84,17 +82,15 @@ public class PlayerMCTS : MonoBehaviour
                 Move(-5);
                 ChangeDirection();
                 break;
-            case 5 :
+            case 5:
                 isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
                 if (isGrounding)
                 {
                     animator.Play("PlayerJump");
                     RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpforce));
-                    isjumping = false; 
+                    isjumping = false;
                 }
-                
                 break;
-
             default:
                 break;
         }
@@ -116,7 +112,7 @@ public class PlayerMCTS : MonoBehaviour
         }
     }
 
-   public void Move(float _Horizontalmove)
+    public void Move(float _Horizontalmove)
     {
         Vector3 targetVelocity = new Vector2(_Horizontalmove, RigidbodyPlayer.velocity.y);
         RigidbodyPlayer.velocity = Vector3.SmoothDamp(RigidbodyPlayer.velocity, targetVelocity, ref velocity, 0.05f);
@@ -148,16 +144,15 @@ public class PlayerMCTS : MonoBehaviour
         yield return new WaitForSeconds(5f);
     }
 
-   public void Punch(PlayerVSMCTS enemie)
+    public void Punch(PlayerVSMCTS enemie)
     {
         enemie.myHealth -= 10;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
     }
 
-   public void Kick(PlayerVSMCTS enemie)
+    public void Kick(PlayerVSMCTS enemie)
     {
         enemie.myHealth -= 20;
         enemie.myHealthBar.GetComponent<Slider>().value = enemie.myHealth;
-    } 
-  
+    }
 }

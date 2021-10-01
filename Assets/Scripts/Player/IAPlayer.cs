@@ -4,37 +4,22 @@ using UnityEngine;
 
 public class IAPlayer : MonoBehaviour
 {
-    // Player
-    public SpriteRenderer player;
-    public PlayerVsIA secondPlayer;
-    public int myHealth = 100;
-    public Slider UIHealth;
-    bool inRange;
-
-    // Move
-    public float moveSpeed;
-    public Rigidbody2D RigidbodyPlayer;
-    Vector3 velocity = Vector3.zero;
-
-    // Jump
-    bool isjumping = false;
-    bool isGrounding = false;
-    public float jumpforce;
+    [SerializeField] SpriteRenderer player;
+    [SerializeField] PlayerVsIA secondPlayer;
+    [SerializeField] Animator animator;
+    [SerializeField] Rigidbody2D RigidbodyPlayer;
     [SerializeField] Transform GroundCheckLeft;
     [SerializeField] Transform GroundCheckRight;
+    [SerializeField] float moveSpeed = 300f;
+    [SerializeField] float jumpForce = 500f;
+    Vector3 velocity = Vector3.zero;
+    bool isjumping, isGrounding, isAttacking, inRange = false;
+    public int myHealth = 100;
+    public Slider UIHealth;
 
-    // Animation
-    public Animator animator;
-
-    // Attack
-    bool isAttacking = false;
-    [SerializeField] GameObject hitboxAttack;
-
-    // Event
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player") inRange = true;
-
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -44,70 +29,58 @@ public class IAPlayer : MonoBehaviour
 
     void Update()
     {
+        // Choisi une action de façon pseudo aléatoire
         int rand = Random.Range(1, 6);
         switch (rand)
         {
+            // Coup de Poing
             case 1:
-                StartCoroutine(waitAttack());
                 isAttacking = true;
                 animator.Play("PlayerPunch");
                 StartCoroutine(DoAttack());
                 if (inRange) Attack(secondPlayer, 10);
                 break;
+            // Coup de Pied
             case 2:
-                StartCoroutine(waitAttack());
                 isAttacking = true;
                 animator.Play("PlayerKick");
                 StartCoroutine(DoAttack());
                 if (inRange) Attack(secondPlayer, 20);
                 break;
+            // Aller à Gauche
             case 3:
                 Move(5);
                 ChangeDirection();
                 break;
+            // Aller à Droite
             case 4:
                 Move(-5);
                 ChangeDirection();
                 break;
+            // Sauter
             case 5:
                 isGrounding = Physics2D.OverlapArea(GroundCheckLeft.position, GroundCheckRight.position);
                 if (isGrounding)
                 {
                     animator.Play("PlayerJump");
-                    RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpforce));
+                    RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpForce));
                     isjumping = false;
                 }
                 break;
             default:
                 break;
         }
-
-        if (Input.GetButtonDown("Fire1") && !isAttacking)
-        {
-            isAttacking = true;
-            animator.Play("PlayerPunch");
-            StartCoroutine(DoAttack());
-            if (inRange) Attack(secondPlayer, 10);
-        }
-
-        if (Input.GetButtonDown("Fire2") && !isAttacking)
-        {
-            isAttacking = true;
-            animator.Play("PlayerKick");
-            StartCoroutine(DoAttack());
-            if (inRange) Attack(secondPlayer, 20);
-        }
     }
 
-   public void Move(float _Horizontalmove)
+    public void Move(float horizontalMove)
     {
-        Vector3 targetVelocity = new Vector2(_Horizontalmove, RigidbodyPlayer.velocity.y);
+        Vector3 targetVelocity = new Vector2(horizontalMove, RigidbodyPlayer.velocity.y);
         RigidbodyPlayer.velocity = Vector3.SmoothDamp(RigidbodyPlayer.velocity, targetVelocity, ref velocity, 0.05f);
 
         if (isjumping)
         {
             animator.Play("PlayerJump");
-            RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpforce));
+            RigidbodyPlayer.AddForce(new Vector2(0.0f, jumpForce));
             isjumping = false;
         }
     }
@@ -120,16 +93,10 @@ public class IAPlayer : MonoBehaviour
 
     public IEnumerator DoAttack()
     {
-        hitboxAttack.SetActive(true);
         yield return new WaitForSeconds(.2f);
-        hitboxAttack.SetActive(false);
         isAttacking = false;
     }
 
-    public IEnumerator waitAttack()
-    {
-        yield return new WaitForSeconds(5f);
-    }
     void Attack(PlayerVsIA enemie, int damage)
     {
         enemie.myHealth -= damage;
